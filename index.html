@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fake Offer Letter &amp; Phishing Inspector | Cybersecurity Threat Scanner</title>
+  <meta name="description" content="Single-page security scanner designed to parse offer text and URLs, evaluate domain age and financial red flags, and compute dynamic Scam Threat Index.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Cyber Grid Background Overlay -->
+  <div class="cyber-grid-overlay"></div>
+
+  <!-- Main Website Container -->
+  <div class="app-container">
+
+    <!-- Header Navigation -->
+    <header class="site-header">
+      <div class="header-content">
+        
+        <!-- Brand / Logo -->
+        <div class="brand-wrapper">
+          <div class="logo-shield">
+            <div class="logo-shield-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M12 8v4"/>
+                <path d="M12 16h.01"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <div class="brand-title">
+              PROMPT WARS <span class="brand-badge">SEC-OPS v1.0</span>
+            </div>
+            <div class="brand-subtitle">Fake Offer Letter &amp; Phishing Inspector</div>
+          </div>
+        </div>
+
+        <!-- Header Actions -->
+        <div class="header-actions">
+          <div class="status-pill">
+            <span class="status-dot"></span>
+            <span>ENGINE: ACTIVE</span>
+          </div>
+
+          <button id="header-audit-btn" class="btn btn-outline-cyan" style="display: none;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            <span>Audit Sheet</span>
+          </button>
+
+          <button id="header-api-btn" class="btn btn-secondary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7.5" cy="15.5" r="5.5"></circle><path d="m21 2-9.6 9.6"></path><path d="m15.5 7.5 3 3L22 7l-3-3"></path></svg>
+            <span>AI Config</span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Hero Intro Section -->
+    <section class="hero-section">
+      <div class="hero-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        <span>Autonomous Threat Intelligence &amp; Phishing Classifier</span>
+      </div>
+
+      <h1 class="hero-title">
+        Fake Offer Letter &amp; <span class="text-gradient">Phishing Inspector</span>
+      </h1>
+
+      <p class="hero-desc">
+        Job seekers and renters lose millions to advance-fee check traps, pay-for-equipment phishing, and deposit traps. Parse appointment text, evaluate domain age, and compute your dynamic Scam Threat Index (0–100%).
+      </p>
+    </section>
+
+    <!-- Live Statistics Row -->
+    <div class="stats-grid">
+      
+      <div class="stat-card">
+        <div class="stat-icon-wrap stat-icon-cyan">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        </div>
+        <div>
+          <div class="stat-label">Total Scans Performed</div>
+          <div class="stat-value" id="stat-total-scans">14</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap stat-icon-red">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        </div>
+        <div>
+          <div class="stat-label">Threats Intercepted</div>
+          <div class="stat-value" id="stat-threats-blocked" style="color: var(--crimson-danger);">9</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap stat-icon-green">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        </div>
+        <div>
+          <div class="stat-label">Legit Offers Verified</div>
+          <div class="stat-value" id="stat-safe-verified" style="color: var(--emerald-safe);">5</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap stat-icon-purple">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+        </div>
+        <div>
+          <div class="stat-label">Heuristic Core Engine</div>
+          <div class="stat-value" style="font-size: 0.95rem; color: #d8b4fe;">Deterministic + NLP</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Multi-Input Parsing Widget -->
+    <div class="glass-card input-widget">
+      
+      <div class="input-widget-header">
+        
+        <!-- Tab Buttons -->
+        <div class="tab-group">
+          <button class="tab-btn active" data-tab="text">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            <span>Direct Text Area</span>
+          </button>
+
+          <button class="tab-btn" data-tab="file">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            <span>File Upload (PDF/TXT)</span>
+          </button>
+
+          <button class="tab-btn" data-tab="url">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <span>URL Scanner</span>
+          </button>
+        </div>
+
+        <!-- Preloaded Demos -->
+        <div class="sample-buttons">
+          <span class="sample-label">Preloaded Demos:</span>
+          <button id="btn-load-fake" class="btn btn-sample btn-sample-danger">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <span>Fake Offer (Phish)</span>
+          </button>
+          <button id="btn-load-legit" class="btn btn-sample btn-sample-safe">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <span>Legit Offer (Stripe)</span>
+          </button>
+          <button id="btn-load-rental" class="btn btn-sample btn-secondary" style="font-size: 0.75rem;">
+            <span>Rental Wire Trap</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Tab 1: Text Area -->
+      <div id="tab-text" class="tab-panel active">
+        <div class="textarea-header">
+          <span>Paste Appointment Letter, Recruitment Email, or Rental Agreement:</span>
+          <span id="char-count" style="font-family: var(--font-mono);">0 characters</span>
+        </div>
+        <textarea id="offer-text-input" class="text-input" placeholder="Paste full email copy, Telegram conversation logs, or appointment letter text here..."></textarea>
+      </div>
+
+      <!-- Tab 2: File Upload -->
+      <div id="tab-file" class="tab-panel">
+        <input type="file" id="file-upload-input" accept=".pdf,.txt,.doc,.docx" style="display: none;">
+        <div id="file-dropzone" class="dropzone">
+          <div class="dropzone-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          </div>
+          <div class="dropzone-title">Drag and drop your Offer Document or click to browse</div>
+          <div class="dropzone-desc">Supports PDF, DOC, and Plain Text files for instant client-side threat parsing.</div>
+        </div>
+      </div>
+
+      <!-- Tab 3: URL Scanner -->
+      <div id="tab-url" class="tab-panel">
+        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px;">
+          Enter Recruiter Domain, Application Link, or Job Portal URL:
+        </div>
+        <div class="url-input-wrapper">
+          <span class="url-input-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          </span>
+          <input type="url" id="url-input" class="url-input" placeholder="https://globaltech-careers-onboarding.xyz/offer/review/8492">
+        </div>
+      </div>
+
+      <!-- Footer Action -->
+      <div class="input-actions">
+        <div class="input-hint">
+          Multi-layer threat analyzer cross-checks equipment traps, WHOIS, check-cashing, &amp; urgency NLP.
+        </div>
+        <button id="btn-scan" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span>Inspect &amp; Analyze Threat Index &rarr;</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Scan Results Section (Dynamic) -->
+    <section id="scan-results" class="results-section">
+      
+      <!-- Top Row: Radial Gauge + Threat Summary -->
+      <div class="results-hero-grid">
+        
+        <!-- Radial Gauge -->
+        <div class="gauge-wrapper">
+          <div id="gauge-ambient-glow" class="gauge-ambient-glow"></div>
+          
+          <div class="gauge-svg-box">
+            <svg class="gauge-svg" viewBox="0 0 180 180">
+              <circle class="gauge-track" cx="90" cy="90" r="78"></circle>
+              <circle id="gauge-progress" class="gauge-progress" cx="90" cy="90" r="78" stroke="#10b981" stroke-dasharray="490" stroke-dashoffset="490"></circle>
+            </svg>
+            <div class="gauge-center-text">
+              <span id="gauge-number" class="gauge-number">0%</span>
+              <span class="gauge-subtext">Scam Index</span>
+            </div>
+          </div>
+
+          <div id="threat-pill" class="threat-pill threat-safe">
+            LOW RISK / VERIFIED SAFE
+          </div>
+        </div>
+
+        <!-- Executive Assessment Summary -->
+        <div class="assessment-card">
+          <div>
+            <div class="assessment-header">
+              <div class="assessment-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>Threat Intelligence Assessment</span>
+              </div>
+              <div id="assessment-time" class="assessment-time">Just now</div>
+            </div>
+
+            <div id="summary-text" class="summary-box">
+              Running multi-layer pattern checks...
+            </div>
+          </div>
+
+          <!-- Detected Entities -->
+          <div id="entity-tags" class="entity-tags">
+            <span class="entity-label">Artifact Entities:</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sub-Scores Breakdown -->
+      <div class="subscores-grid">
+        
+        <!-- Domain Credibility -->
+        <div class="subscore-card">
+          <div>
+            <div class="subscore-header">
+              <div class="subscore-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                <span>Domain &amp; Metadata Credibility</span>
+              </div>
+              <span id="score-domain-badge" class="subscore-badge tag-cyan">OPTIMAL</span>
+            </div>
+            <div class="subscore-desc">Evaluates free webmail handles (@gmail, @yahoo), newly created domains, and identity spoofing.</div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem;">
+              <span style="color: var(--text-muted);">Risk Factor</span>
+              <span id="score-domain-val" style="font-weight: 800;">5%</span>
+            </div>
+            <div class="progress-track">
+              <div id="score-domain-bar" class="progress-fill" style="width: 5%; background: var(--emerald-safe);"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Financial Risk -->
+        <div class="subscore-card">
+          <div>
+            <div class="subscore-header">
+              <div class="subscore-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                <span>Financial &amp; Deposit Trap Risk</span>
+              </div>
+              <span id="score-financial-badge" class="subscore-badge tag-cyan">OPTIMAL</span>
+            </div>
+            <div class="subscore-desc">Flags mailed check cashing, equipment vendor payments, wire transfers, Zelle, and advance fees.</div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem;">
+              <span style="color: var(--text-muted);">Risk Factor</span>
+              <span id="score-financial-val" style="font-weight: 800;">5%</span>
+            </div>
+            <div class="progress-track">
+              <div id="score-financial-bar" class="progress-fill" style="width: 5%; background: var(--emerald-safe);"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Urgency Risk -->
+        <div class="subscore-card">
+          <div>
+            <div class="subscore-header">
+              <div class="subscore-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <span>Communication &amp; Urgency Pressure</span>
+              </div>
+              <span id="score-urgency-badge" class="subscore-badge tag-cyan">OPTIMAL</span>
+            </div>
+            <div class="subscore-desc">Measures short deadlines (under 24h), generic greetings, and Telegram/WhatsApp interview tactics.</div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem;">
+              <span style="color: var(--text-muted);">Risk Factor</span>
+              <span id="score-urgency-val" style="font-weight: 800;">5%</span>
+            </div>
+            <div class="progress-track">
+              <div id="score-urgency-bar" class="progress-fill" style="width: 5%; background: var(--emerald-safe);"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sentence-Level Threat Highlighter -->
+      <div class="glass-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--border-color); margin-bottom: 16px;">
+          <div>
+            <h3 style="font-size: 1rem; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--cyan-primary);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              <span>Sentence-Level Threat Highlighter</span>
+            </h3>
+            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 2px;">
+              Click or hover any highlighted phrase to inspect the specific scam vector and mechanism.
+            </p>
+          </div>
+
+          <div style="display: flex; gap: 12px; font-size: 0.75rem;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="width: 10px; height: 10px; border-radius: 2px; background: rgba(239, 68, 68, 0.4); border: 1px solid var(--crimson-danger);"></span>
+              <span style="color: #fca5a5; font-weight: 600;">Critical Trap</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="width: 10px; height: 10px; border-radius: 2px; background: rgba(245, 158, 11, 0.4); border: 1px solid var(--amber-warning);"></span>
+              <span style="color: #fcd34d; font-weight: 600;">Warning Flag</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="highlighter-grid">
+          
+          <!-- Document Viewer -->
+          <div id="document-viewer" class="document-viewer">
+            Select a demo or paste offer text to begin inspection...
+          </div>
+
+          <!-- Threat Vector Inspector Panel -->
+          <div class="vector-inspector">
+            <div>
+              <div id="vector-inspector-title" class="vector-inspector-title">
+                <span>Threat Vector Analysis</span>
+              </div>
+              <div class="vector-detail-card">
+                <div id="vector-quote" class="vector-quote">"Select a phrase"</div>
+                <div id="vector-reason" class="vector-reason">
+                  Click any highlighted sentence on the left to read its cybersecurity analysis.
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px;">
+                Detected Vectors List:
+              </div>
+              <div id="vector-list" class="vector-list">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Actionable Remediation Guidance -->
+      <div class="glass-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; border-bottom: 1px solid var(--border-color);">
+          <div>
+            <h3 style="font-size: 1rem; font-weight: 800; color: #ffffff;">
+              Actionable Security Remediation Directives
+            </h3>
+            <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 2px;">
+              Follow these prioritized protocols to mitigate financial liability and protect identity credentials.
+            </p>
+          </div>
+
+          <div style="display: flex; gap: 8px;">
+            <button id="btn-print-pdf" class="btn btn-secondary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>Print PDF</span>
+            </button>
+            <button id="btn-audit-modal" class="btn btn-primary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+              <span>Full Audit Sheet</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="remediation-list" class="remediation-list">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Official Fraud Reporting Authorities (Shown on High Risk) -->
+        <div id="authority-block" class="authority-links" style="display: none;">
+          <a href="https://www.ic3.gov/" target="_blank" rel="noopener noreferrer" class="authority-card">
+            <div>
+              <div class="authority-name">FBI IC3 Reporting</div>
+              <div class="authority-desc">Internet Crime Complaint Center</div>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--crimson-danger);"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          </a>
+
+          <a href="https://reportfraud.ftc.gov/" target="_blank" rel="noopener noreferrer" class="authority-card">
+            <div>
+              <div class="authority-name">FTC Report Fraud</div>
+              <div class="authority-desc">Federal Trade Commission</div>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--crimson-danger);"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          </a>
+
+          <a href="https://lookup.icann.org/" target="_blank" rel="noopener noreferrer" class="authority-card">
+            <div>
+              <div class="authority-name">ICANN WHOIS Lookup</div>
+              <div class="authority-desc">Verify Domain Age &amp; Registrar</div>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--cyan-primary);"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          </a>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div>
+        Built for Prompt Wars 2026 &bull; Single-Page Standalone Web Architecture (&lt;10 MB)
+      </div>
+      <div style="font-family: var(--font-mono);">
+        Engine: Multi-Layer Heuristic &amp; NLP Security Classifier
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Audit Report Modal -->
+  <div id="audit-modal" class="modal-backdrop">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--cyan-primary);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span>CYBERSECURITY AUDIT REPORT</span>
+        </div>
+        <button id="audit-modal-close" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="audit-report-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI API Key Configuration Modal -->
+  <div id="api-modal" class="modal-backdrop">
+    <div class="modal-window" style="max-width: 480px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--purple-accent);"><circle cx="7.5" cy="15.5" r="5.5"></circle><path d="m21 2-9.6 9.6"></path><path d="m15.5 7.5 3 3L22 7l-3-3"></path></svg>
+          <span>AI Threat Model Integration</span>
+        </div>
+        <button id="api-modal-close" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 8px; padding: 12px; font-size: 0.75rem; color: #d8b4fe; line-height: 1.5; margin-bottom: 14px;">
+          The built-in deterministic heuristic &amp; NLP engine operates 100% offline. You can optionally supply a Gemini API key to run neural threat verification.
+        </div>
+        
+        <label style="display: block; font-size: 0.75rem; font-weight: 700; margin-bottom: 6px;">Google Gemini API Key:</label>
+        <input type="password" id="gemini-key-input" class="text-input" style="min-height: 40px; padding: 10px; margin-bottom: 16px;" placeholder="AIzaSy...">
+
+        <div style="display: flex; justify-content: flex-end; gap: 8px;">
+          <button id="btn-api-save" class="btn btn-primary" style="background: var(--purple-accent); color: #ffffff;">
+            <span>Save Configuration</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript App -->
+  <script src="app.js"></script>
+</body>
+</html>
