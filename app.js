@@ -98,7 +98,7 @@ Property Owners`
       pattern: /(issue|send|mail|overnight|deposit|receive)\s+(a\s+)?(company\s+)?check/i,
       severity: 'CRITICAL',
       category: 'financial',
-      explanation: 'Scammers frequently send fraudulent or counterfeit checks, instructing victims to deposit them before the bank discovers they are forged.',
+      explanation: 'Scammers frequently send fraudulent checks, asking victims to deposit them before the bank flags them as forged.',
       financialWeight: 35,
     },
     {
@@ -106,7 +106,7 @@ Property Owners`
       pattern: /(wire\s*transfer|zelle|venmo|cashapp|cash\s*app|apple\s*pay|crypto|bitcoin|gift\s*card)/i,
       severity: 'CRITICAL',
       category: 'financial',
-      explanation: 'Requests to send money via non-reversible consumer payment apps (Zelle, Wire, Crypto, Gift Cards) are a definitive hallmark of employment scams.',
+      explanation: 'Requests to send money via irreversible apps (Zelle, Wire, Crypto, Gift Cards) are a hallmark of phishing scams.',
       financialWeight: 40,
     },
     {
@@ -114,7 +114,7 @@ Property Owners`
       pattern: /(certified|approved|accredited|authorized)\s+(hardware\s+|equipment\s+)?vendor/i,
       severity: 'CRITICAL',
       category: 'financial',
-      explanation: 'Legitimate employers provide standard company-provisioned equipment directly; they never instruct candidates to buy from third-party vendors.',
+      explanation: 'Legitimate employers supply hardware directly; they never ask new hires to pay third-party vendors.',
       financialWeight: 35,
     },
     {
@@ -122,7 +122,7 @@ Property Owners`
       pattern: /(deposit\s+it\s+immediately|mobile\s+deposit|once\s+the\s+funds\s+reflect)/i,
       severity: 'CRITICAL',
       category: 'financial',
-      explanation: 'Exploits statutory banking float periods. The bank makes funds temporarily visible before discovering the counterfeit days later.',
+      explanation: 'Exploits statutory banking float periods before counterfeit checks bounce.',
       financialWeight: 30,
     },
     {
@@ -130,7 +130,7 @@ Property Owners`
       pattern: /(refundable\s+security\s+deposit|first\s+month\s+rent.*totaling|escrow\s+courier|keys.*dispatched.*fedex)/i,
       severity: 'CRITICAL',
       category: 'financial',
-      explanation: 'Phantom rental scheme: demanding advance deposits before an in-person physical walkthrough and promising keys via mail.',
+      explanation: 'Phantom rental scheme: demanding deposits before in-person showing and promising keys via mail.',
       financialWeight: 40,
     },
     {
@@ -138,7 +138,7 @@ Property Owners`
       pattern: /(@gmail\.com|@yahoo\.com|@hotmail\.com|@outlook\.com|@aol\.com|@protonmail\.com)/i,
       severity: 'WARNING',
       category: 'domain',
-      explanation: 'Corporate recruiters communicate via official company domain addresses, never generic free webmail accounts.',
+      explanation: 'Corporate recruiters communicate via official company domains, not generic free webmail accounts.',
       domainWeight: 45,
     },
     {
@@ -146,7 +146,7 @@ Property Owners`
       pattern: /(telegram|whatsapp|signal|viber|google\s*chat|text-based\s+interview)/i,
       severity: 'WARNING',
       category: 'communication',
-      explanation: 'Conducting formal hiring or interviews exclusively via Telegram or WhatsApp obscures identity and avoids enterprise oversight.',
+      explanation: 'Conducting hiring exclusively over chat apps (Telegram, WhatsApp) obscures recruiter identity.',
       urgencyWeight: 30,
       domainWeight: 25,
     },
@@ -155,7 +155,7 @@ Property Owners`
       pattern: /(dear\s+candidate|dear\s+applicant|hello\s+future\s+tenant|dear\s+job\s+seeker)/i,
       severity: 'WARNING',
       category: 'syntax',
-      explanation: 'Generic, impersonal greetings indicate mass automated phishing templates blasted to thousands of potential targets.',
+      explanation: 'Impersonal greetings indicate mass automated phishing templates.',
       urgencyWeight: 15,
     },
     {
@@ -163,7 +163,7 @@ Property Owners`
       pattern: /(within\s+(12|24|6|48)\s*hours|before\s+midnight|immediate\s+revocation|urgent|strictly\s+confidential\s+deadline)/i,
       severity: 'WARNING',
       category: 'urgency',
-      explanation: 'Manufactured deadlines induce psychological panic, preventing candidates from verifying credentials with bank or corporate channels.',
+      explanation: 'Manufactured deadlines induce panic, preventing victims from verifying credentials.',
       urgencyWeight: 40,
     },
     {
@@ -171,7 +171,7 @@ Property Owners`
       pattern: /(do\s+not\s+disturb\s+the\s+current\s+occupants|drive\s+by\s+and\s+look\s+through\s+the\s+window)/i,
       severity: 'CRITICAL',
       category: 'communication',
-      explanation: 'Common tactic in rental scams to prevent victims from discovering the legitimate current tenants or actual homeowner.',
+      explanation: 'Common tactic in rental scams to prevent victims from discovering the legitimate current tenants.',
       urgencyWeight: 35,
       financialWeight: 25,
     },
@@ -180,7 +180,7 @@ Property Owners`
       pattern: /(missionary\s+assignment|currently\s+overseas|out\s+of\s+the\s+country|god-fearing|god\s+bless\s+you)/i,
       severity: 'WARNING',
       category: 'communication',
-      explanation: 'Emotional appeals and stories of missionary assignments are standard scripts used to explain inability to meet in person.',
+      explanation: 'Emotional appeals of overseas missionary work are classic deception scripts.',
       domainWeight: 30,
       urgencyWeight: 15,
     }
@@ -189,9 +189,9 @@ Property Owners`
   // --- State Variables ---
   let currentResult = null;
   let stats = {
-    totalScans: 14,
-    threatsBlocked: 9,
-    safeVerified: 5
+    totalScans: 0,
+    threatsBlocked: 0,
+    safeVerified: 0
   };
 
   // --- DOM Elements ---
@@ -215,6 +215,16 @@ Property Owners`
     statTotal: document.getElementById('stat-total-scans'),
     statBlocked: document.getElementById('stat-threats-blocked'),
     statVerified: document.getElementById('stat-safe-verified'),
+    btnResetStats: document.getElementById('btn-reset-stats'),
+
+    // Loading Overlay
+    scanningOverlay: document.getElementById('scanning-overlay'),
+    scannerStatusText: document.getElementById('scanner-status-text'),
+    scannerProgressBar: document.getElementById('scanner-progress-bar'),
+    scannerTermLine1: document.getElementById('scanner-term-line1'),
+    scannerTermLine2: document.getElementById('scanner-term-line2'),
+    scannerTermLine3: document.getElementById('scanner-term-line3'),
+    scannerTermLine4: document.getElementById('scanner-term-line4'),
 
     // Results
     resultsSection: document.getElementById('scan-results'),
@@ -273,7 +283,6 @@ Property Owners`
     attachEventListeners();
     updateStatsDisplay();
 
-    // If text area has initial text, count chars
     if (el.textArea) {
       el.textArea.addEventListener('input', () => {
         el.charCount.textContent = `${el.textArea.value.length} characters`;
@@ -285,7 +294,11 @@ Property Owners`
   function loadSavedStats() {
     try {
       const saved = localStorage.getItem('pw_web_stats');
-      if (saved) stats = JSON.parse(saved);
+      if (saved) {
+        stats = JSON.parse(saved);
+      } else {
+        stats = { totalScans: 0, threatsBlocked: 0, safeVerified: 0 };
+      }
       const savedKey = localStorage.getItem('pw_gemini_key');
       if (savedKey && el.apiInput) el.apiInput.value = savedKey;
     } catch (e) {}
@@ -295,6 +308,13 @@ Property Owners`
     try {
       localStorage.setItem('pw_web_stats', JSON.stringify(stats));
     } catch (e) {}
+  }
+
+  function resetStats() {
+    stats = { totalScans: 0, threatsBlocked: 0, safeVerified: 0 };
+    saveStats();
+    updateStatsDisplay();
+    alert('Threat Counter successfully reset to 0.');
   }
 
   function updateStatsDisplay() {
@@ -322,8 +342,11 @@ Property Owners`
     el.btnLegitSample.addEventListener('click', () => loadSample('legitimate-corporate-offer'));
     el.btnRentalSample.addEventListener('click', () => loadSample('rental-deposit-scam'));
 
+    // Reset Button
+    if (el.btnResetStats) el.btnResetStats.addEventListener('click', resetStats);
+
     // Scan Submit Button
-    el.scanBtn.addEventListener('click', executeScan);
+    el.scanBtn.addEventListener('click', executeScanWithAnimation);
 
     // File Drop Zone
     if (el.dropzone && el.fileInput) {
@@ -366,7 +389,6 @@ Property Owners`
       el.textArea.value = sample.content;
       el.charCount.textContent = `${sample.content.length} characters`;
       
-      // Switch to text tab
       const textTabBtn = document.querySelector('[data-tab="text"]');
       if (textTabBtn) textTabBtn.click();
     }
@@ -382,13 +404,12 @@ Property Owners`
         content = decoder.decode(content);
       }
       
-      // Sanitize binary stream
       content = content.replace(/[^\x20-\x7E\t\n\r]/g, ' ').replace(/\s+/g, ' ').trim();
       
       if (content.length < 40) {
         content = `[Document: ${file.name}]\n` +
                   `Size: ${(file.size / 1024).toFixed(1)} KB\n\n` +
-                  `File uploaded. Reviewing extracted text for advance-fee traps and suspicious recruiter vectors.`;
+                  `Document text parsed for advance-fee traps and recruiter anomalies.`;
       }
 
       if (el.textArea) {
@@ -420,14 +441,14 @@ Property Owners`
     el.apiModal.classList.remove('open');
   }
 
-  // --- Core Cybersecurity Analysis Engine ---
+  // --- Core Local Analyzer ---
   function analyzeTextLocally(rawText) {
     const cleanText = rawText.trim();
     const flagged = [];
 
-    let financialScore = 6;
-    let domainScore = 6;
-    let urgencyScore = 6;
+    let financialScore = 0;
+    let domainScore = 0;
+    let urgencyScore = 0;
 
     // Evaluate rules
     for (const rule of RULES) {
@@ -453,7 +474,7 @@ Property Owners`
       }
     }
 
-    // Check for legitimate Fortune 500 signals
+    // Check for legitimate signals
     const hasLegit = /(workday\.com|docusign|stripe\.com|google\.com|never\s+asks\s+candidates\s+to\s+purchase|zero\s+cost\s+to\s+you)/i.test(cleanText);
     if (hasLegit && flagged.length === 0) {
       financialScore = Math.max(0, financialScore - 15);
@@ -461,15 +482,12 @@ Property Owners`
       urgencyScore = Math.max(0, urgencyScore - 15);
     }
 
-    // Clamp subscores
     financialScore = Math.min(100, Math.max(0, Math.round(financialScore)));
     domainScore = Math.min(100, Math.max(0, Math.round(domainScore)));
     urgencyScore = Math.min(100, Math.max(0, Math.round(urgencyScore)));
 
-    // Weighted composite Scam Threat Index (Financial 50%, Domain 30%, Urgency 20%)
     let index = Math.round((financialScore * 0.50) + (domainScore * 0.30) + (urgencyScore * 0.20));
 
-    // Force high threat score if critical financial traps are found
     const hasCritFinancial = flagged.some(f => f.severity === 'CRITICAL' && f.category === 'financial');
     if (hasCritFinancial && index < 75) {
       index = Math.max(index, 86);
@@ -481,22 +499,20 @@ Property Owners`
     if (index >= 66) riskCategory = 'HIGH';
     else if (index >= 31) riskCategory = 'MEDIUM';
 
-    // Extract Entities
     const emails = Array.from(new Set(cleanText.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g) || []));
     const paymentMethods = Array.from(new Set(cleanText.match(/\b(check|wire\s*transfer|zelle|venmo|cashapp|cash\s*app|bitcoin|crypto|apple\s*pay|gift\s*card)\b/gi) || []));
     const platforms = Array.from(new Set(cleanText.match(/\b(telegram|whatsapp|signal|viber|google\s*chat|docusign|workday)\b/gi) || []));
 
-    // Summary & Actions
     let summary = '';
     const actions = [];
 
     if (riskCategory === 'HIGH') {
       summary = `CRITICAL THREAT DETECTED (Threat Index: ${index}%). The analyzed text contains explicit advance-fee / check-cashing mechanisms, third-party vendor payment instructions, or high-risk communications. Extreme probability of financial fraud.`;
       actions.push('DO NOT deposit any received checks or transfer funds via Zelle, Wire, or Crypto.');
-      actions.push('Do NOT send copies of government IDs, SSN, or personal bank account routing numbers.');
+      actions.push('Do NOT send copies of government IDs, SSN, or personal bank routing numbers.');
       actions.push('Verify the employer by searching the official corporate website and contacting HR directly.');
       actions.push('Report the scam attempt to the FBI IC3 (ic3.gov) and Federal Trade Commission (reportfraud.ftc.gov).');
-      actions.push('Block all sender communication channels and report phishing.');
+      actions.push('Block all sender communication channels.');
     } else if (riskCategory === 'MEDIUM') {
       summary = `SUSPICIOUS PATTERNS IDENTIFIED (Threat Index: ${index}%). The communication exhibits red flags such as generic greetings, short response windows, or informal recruitment channels. Verify independently before proceeding.`;
       actions.push('Verify the recruiter email domain against the official company career portal.');
@@ -526,8 +542,8 @@ Property Owners`
     };
   }
 
-  // --- Scan Execution Handler ---
-  function executeScan() {
+  // --- Scan Execution with Animated Cyber Loading Overlay ---
+  function executeScanWithAnimation() {
     let textToAnalyze = '';
     const activePanel = document.querySelector('.tab-panel.active');
 
@@ -540,11 +556,39 @@ Property Owners`
       if (!textToAnalyze) return alert('Please paste offer text or upload a document to analyze.');
     }
 
-    // Set UI loading state
-    el.scanBtn.disabled = true;
-    el.scanBtn.innerHTML = '<span>Inspecting Vectors...</span>';
+    // Show Animated Loading Overlay
+    el.scanningOverlay.classList.add('active');
+    el.scannerProgressBar.style.width = '15%';
+    el.scannerStatusText.textContent = 'Tokenizing document & extracting structural markers...';
+    el.scannerTermLine1.style.display = 'block';
+    el.scannerTermLine2.style.display = 'none';
+    el.scannerTermLine3.style.display = 'none';
+    el.scannerTermLine4.style.display = 'none';
 
+    // Step 2
     setTimeout(() => {
+      el.scannerProgressBar.style.width = '45%';
+      el.scannerStatusText.textContent = 'Cross-referencing domain age & free webmail aliases...';
+      el.scannerTermLine2.style.display = 'block';
+    }, 300);
+
+    // Step 3
+    setTimeout(() => {
+      el.scannerProgressBar.style.width = '75%';
+      el.scannerStatusText.textContent = 'Parsing advance-fee, check-cashing & equipment traps...';
+      el.scannerTermLine3.style.display = 'block';
+    }, 650);
+
+    // Step 4
+    setTimeout(() => {
+      el.scannerProgressBar.style.width = '95%';
+      el.scannerStatusText.textContent = 'Computing dynamic Scam Threat Index (0-100%)...';
+      el.scannerTermLine4.style.display = 'block';
+    }, 950);
+
+    // Finalize
+    setTimeout(() => {
+      el.scannerProgressBar.style.width = '100%';
       currentResult = analyzeTextLocally(textToAnalyze);
 
       // Update statistics
@@ -560,30 +604,25 @@ Property Owners`
       // Render Dashboard
       renderDashboard(currentResult);
 
-      // Reset button
-      el.scanBtn.disabled = false;
-      el.scanBtn.innerHTML = '<span>Inspect &amp; Analyze Threat Index &rarr;</span>';
-
-      // Scroll smoothly to results
+      // Hide Overlay & Reveal Results
+      el.scanningOverlay.classList.remove('active');
       el.resultsSection.classList.add('visible');
       el.resultsSection.scrollIntoView({ behavior: 'smooth' });
 
       if (el.headerAuditBtn) el.headerAuditBtn.style.display = 'inline-flex';
-    }, 450);
+    }, 1250);
   }
 
   // --- Render Dashboard UI ---
   function renderDashboard(res) {
     const score = res.scam_threat_index;
-    const circumference = 2 * Math.PI * 78; // r=78
+    const circumference = 2 * Math.PI * 78;
 
-    // Animate radial gauge
     el.gaugeNumber.textContent = `${score}%`;
     const offset = circumference - (score / 100) * circumference;
     el.gaugeProgress.style.strokeDasharray = circumference;
     el.gaugeProgress.style.strokeDashoffset = offset;
 
-    // Theme coloring based on risk
     if (score >= 66) {
       el.gaugeProgress.style.stroke = '#ef4444';
       el.gaugeGlow.style.backgroundColor = '#ef4444';
@@ -601,16 +640,13 @@ Property Owners`
       el.threatPill.textContent = 'LOW RISK / VERIFIED SAFE';
     }
 
-    // Update Sub-scores
     updateSubScoreCard(res.sub_scores.domain_credibility, el.scoreDomainVal, el.scoreDomainBar, el.scoreDomainBadge);
     updateSubScoreCard(res.sub_scores.financial_risk, el.scoreFinancialVal, el.scoreFinancialBar, el.scoreFinancialBadge);
     updateSubScoreCard(res.sub_scores.urgency_risk, el.scoreUrgencyVal, el.scoreUrgencyBar, el.scoreUrgencyBadge);
 
-    // Summary & Time
     el.assessmentTime.textContent = `Scanned at ${new Date(res.analyzed_at).toLocaleTimeString()}`;
     el.summaryText.textContent = res.summary;
 
-    // Entity Badges
     el.entityTags.innerHTML = '<span class="entity-label">Artifact Entities:</span>';
     res.entities.paymentMethods.forEach(pm => {
       el.entityTags.innerHTML += `<span class="tag-badge tag-red">Payment: ${pm}</span>`;
@@ -622,10 +658,8 @@ Property Owners`
       el.entityTags.innerHTML += `<span class="tag-badge tag-cyan">Email: ${em}</span>`;
     });
 
-    // Sentence Highlighter
     renderDocumentHighlighter(res.raw_text, res.flagged_phrases);
 
-    // Remediation Actions
     el.remediationList.innerHTML = '';
     res.recommended_actions.forEach((act, i) => {
       el.remediationList.innerHTML += `
@@ -636,13 +670,11 @@ Property Owners`
       `;
     });
 
-    // Authority Reporting Block visibility
     if (el.authorityBlock) {
-      el.authorityBlock.style.display = res.risk_category === 'HIGH' ? 'block' : 'none';
+      el.authorityBlock.style.display = res.risk_category === 'HIGH' ? 'grid' : 'none';
     }
   }
 
-  // --- Subscore Helpers ---
   function updateSubScoreCard(val, valEl, barEl, badgeEl) {
     valEl.textContent = `${val}%`;
     barEl.style.width = `${val}%`;
@@ -665,7 +697,6 @@ Property Owners`
     }
   }
 
-  // --- Sentence-Level Highlighter Renderer ---
   function renderDocumentHighlighter(rawText, flaggedPhrases) {
     if (!flaggedPhrases || flaggedPhrases.length === 0) {
       el.docViewer.textContent = rawText;
@@ -675,7 +706,6 @@ Property Owners`
       return;
     }
 
-    // Tokenize text and embed interactive spans
     let html = rawText;
     const sorted = [...flaggedPhrases].sort((a, b) => b.phrase.length - a.phrase.length);
 
@@ -690,7 +720,6 @@ Property Owners`
 
     el.docViewer.innerHTML = html;
 
-    // Vector List on the right
     el.vectorList.innerHTML = '';
     sorted.forEach((flag, idx) => {
       const btn = document.createElement('button');
@@ -703,10 +732,8 @@ Property Owners`
       el.vectorList.appendChild(btn);
     });
 
-    // Select first vector by default
     selectVector(sorted[0], 0);
 
-    // Attach click events to highlighted spans in document viewer
     const spans = el.docViewer.querySelectorAll('[data-vector-idx]');
     spans.forEach(span => {
       span.addEventListener('click', () => {
@@ -720,13 +747,11 @@ Property Owners`
     el.vectorQuote.textContent = `"${flag.phrase}"`;
     el.vectorReason.textContent = flag.explanation;
 
-    // Update active highlight in document
     const spans = el.docViewer.querySelectorAll('[data-vector-idx]');
     spans.forEach(s => s.classList.remove('selected'));
     const targetSpans = el.docViewer.querySelectorAll(`[data-vector-idx="${index}"]`);
     targetSpans.forEach(s => s.classList.add('selected'));
 
-    // Update active button in list
     const btns = el.vectorList.querySelectorAll('.vector-list-btn');
     btns.forEach((b, i) => {
       if (i === index) b.classList.add('active');
@@ -734,7 +759,6 @@ Property Owners`
     });
   }
 
-  // --- Audit Modal Display ---
   function openAuditModal() {
     if (!currentResult) return;
     const res = currentResult;
@@ -808,7 +832,6 @@ Property Owners`
     el.auditModal.classList.add('open');
   }
 
-  // Initialize on DOM load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

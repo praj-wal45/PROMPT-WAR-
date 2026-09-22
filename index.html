@@ -19,6 +19,44 @@
   <!-- Cyber Grid Background Overlay -->
   <div class="cyber-grid-overlay"></div>
 
+  <!-- Animated Scanning Overlay (Loading Page Modal) -->
+  <div id="scanning-overlay" class="scanning-overlay">
+    <div class="scanner-card">
+      
+      <!-- Radar Pulse -->
+      <div class="radar-box">
+        <div class="radar-circle circle-1"></div>
+        <div class="radar-circle circle-2"></div>
+        <div class="radar-circle circle-3"></div>
+        <div class="radar-scanner"></div>
+        <div class="radar-center">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--cyan-primary);">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M12 8v4"/>
+            <path d="M12 16h.01"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="scanner-title">CYBERSECURITY THREAT SCAN IN PROGRESS</div>
+      <div id="scanner-status-text" class="scanner-step-text">Initializing Heuristic Threat Classifier...</div>
+
+      <!-- Progress Bar -->
+      <div class="scanner-progress-track">
+        <div id="scanner-progress-bar" class="scanner-progress-fill"></div>
+      </div>
+
+      <!-- Live Terminal Output -->
+      <div class="scanner-terminal">
+        <div id="scanner-term-line1" class="term-line">&gt; Initializing token stream parser...</div>
+        <div id="scanner-term-line2" class="term-line" style="display: none;">&gt; Scanning domain reputation and free webmail handles...</div>
+        <div id="scanner-term-line3" class="term-line" style="display: none;">&gt; Inspecting check-cashing and equipment payment traps...</div>
+        <div id="scanner-term-line4" class="term-line" style="display: none;">&gt; Computing composite Scam Threat Index (0-100%)...</div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Main Website Container -->
   <div class="app-container">
 
@@ -49,7 +87,7 @@
         <div class="header-actions">
           <div class="status-pill">
             <span class="status-dot"></span>
-            <span>ENGINE: ACTIVE</span>
+            <span>PORT 3000: CONNECTED</span>
           </div>
 
           <button id="header-audit-btn" class="btn btn-outline-cyan" style="display: none;">
@@ -78,53 +116,61 @@
       </h1>
 
       <p class="hero-desc">
-        Job seekers and renters lose millions to advance-fee check traps, pay-for-equipment phishing, and deposit traps. Parse appointment text, evaluate domain age, and compute your dynamic Scam Threat Index (0–100%).
+        Job seekers and renters lose millions to advance-fee check traps, pay-for-equipment phishing, and deposit traps. Parse appointment copy, evaluate domain age, and compute your dynamic Scam Threat Index (0–100%).
       </p>
     </section>
 
-    <!-- Live Statistics Row -->
-    <div class="stats-grid">
-      
-      <div class="stat-card">
-        <div class="stat-icon-wrap stat-icon-cyan">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-        </div>
-        <div>
-          <div class="stat-label">Total Scans Performed</div>
-          <div class="stat-value" id="stat-total-scans">14</div>
-        </div>
+    <!-- Live Statistics Row with Reset Feature -->
+    <div class="stats-wrapper">
+      <div class="stats-top-bar">
+        <span class="stats-heading">Live Threat Analytics</span>
+        <button id="btn-reset-stats" class="btn-reset" title="Reset all counter statistics to 0">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg>
+          <span>Reset Counter (0)</span>
+        </button>
       </div>
 
-      <div class="stat-card">
-        <div class="stat-icon-wrap stat-icon-red">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon-wrap stat-icon-cyan">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          </div>
+          <div>
+            <div class="stat-label">Total Scans Performed</div>
+            <div class="stat-value" id="stat-total-scans">0</div>
+          </div>
         </div>
-        <div>
-          <div class="stat-label">Threats Intercepted</div>
-          <div class="stat-value" id="stat-threats-blocked" style="color: var(--crimson-danger);">9</div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrap stat-icon-red">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          </div>
+          <div>
+            <div class="stat-label">Threats Intercepted</div>
+            <div class="stat-value" id="stat-threats-blocked" style="color: var(--crimson-danger);">0</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrap stat-icon-green">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          </div>
+          <div>
+            <div class="stat-label">Legit Offers Verified</div>
+            <div class="stat-value" id="stat-safe-verified" style="color: var(--emerald-safe);">0</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrap stat-icon-purple">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+          </div>
+          <div>
+            <div class="stat-label">Heuristic Core Engine</div>
+            <div class="stat-value" style="font-size: 0.95rem; color: #d8b4fe;">Active &amp; Ready</div>
+          </div>
         </div>
       </div>
-
-      <div class="stat-card">
-        <div class="stat-icon-wrap stat-icon-green">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-        </div>
-        <div>
-          <div class="stat-label">Legit Offers Verified</div>
-          <div class="stat-value" id="stat-safe-verified" style="color: var(--emerald-safe);">5</div>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon-wrap stat-icon-purple">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
-        </div>
-        <div>
-          <div class="stat-label">Heuristic Core Engine</div>
-          <div class="stat-value" style="font-size: 0.95rem; color: #d8b4fe;">Deterministic + NLP</div>
-        </div>
-      </div>
-
     </div>
 
     <!-- Multi-Input Parsing Widget -->
@@ -135,7 +181,7 @@
         <!-- Tab Buttons -->
         <div class="tab-group">
           <button class="tab-btn active" data-tab="text">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
             <span>Direct Text Area</span>
           </button>
 
@@ -215,10 +261,10 @@
 
     </div>
 
-    <!-- Scan Results Section (Dynamic) -->
+    <!-- Scan Results Section (Simplified & Intuitive) -->
     <section id="scan-results" class="results-section">
       
-      <!-- Top Row: Radial Gauge + Threat Summary -->
+      <!-- Top Row: Radial Gauge + Clean Threat Summary -->
       <div class="results-hero-grid">
         
         <!-- Radial Gauge -->
@@ -274,19 +320,19 @@
             <div class="subscore-header">
               <div class="subscore-title">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                <span>Domain &amp; Metadata Credibility</span>
+                <span>Domain &amp; Metadata</span>
               </div>
               <span id="score-domain-badge" class="subscore-badge tag-cyan">OPTIMAL</span>
             </div>
-            <div class="subscore-desc">Evaluates free webmail handles (@gmail, @yahoo), newly created domains, and identity spoofing.</div>
+            <div class="subscore-desc">Checks for free webmail handles (@gmail) and spoofed recruiter handles.</div>
           </div>
           <div>
             <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem;">
               <span style="color: var(--text-muted);">Risk Factor</span>
-              <span id="score-domain-val" style="font-weight: 800;">5%</span>
+              <span id="score-domain-val" style="font-weight: 800;">0%</span>
             </div>
             <div class="progress-track">
-              <div id="score-domain-bar" class="progress-fill" style="width: 5%; background: var(--emerald-safe);"></div>
+              <div id="score-domain-bar" class="progress-fill" style="width: 0%; background: var(--emerald-safe);"></div>
             </div>
           </div>
         </div>
@@ -297,19 +343,19 @@
             <div class="subscore-header">
               <div class="subscore-title">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                <span>Financial &amp; Deposit Trap Risk</span>
+                <span>Financial &amp; Deposit Trap</span>
               </div>
               <span id="score-financial-badge" class="subscore-badge tag-cyan">OPTIMAL</span>
             </div>
-            <div class="subscore-desc">Flags mailed check cashing, equipment vendor payments, wire transfers, Zelle, and advance fees.</div>
+            <div class="subscore-desc">Flags mailed check cashing, hardware vendor wires, and Zelle requests.</div>
           </div>
           <div>
             <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem;">
               <span style="color: var(--text-muted);">Risk Factor</span>
-              <span id="score-financial-val" style="font-weight: 800;">5%</span>
+              <span id="score-financial-val" style="font-weight: 800;">0%</span>
             </div>
             <div class="progress-track">
-              <div id="score-financial-bar" class="progress-fill" style="width: 5%; background: var(--emerald-safe);"></div>
+              <div id="score-financial-bar" class="progress-fill" style="width: 0%; background: var(--emerald-safe);"></div>
             </div>
           </div>
         </div>
@@ -320,19 +366,19 @@
             <div class="subscore-header">
               <div class="subscore-title">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                <span>Communication &amp; Urgency Pressure</span>
+                <span>Communication &amp; Urgency</span>
               </div>
               <span id="score-urgency-badge" class="subscore-badge tag-cyan">OPTIMAL</span>
             </div>
-            <div class="subscore-desc">Measures short deadlines (under 24h), generic greetings, and Telegram/WhatsApp interview tactics.</div>
+            <div class="subscore-desc">Measures short deadlines (under 24h) and Telegram/WhatsApp interview tactics.</div>
           </div>
           <div>
             <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem;">
               <span style="color: var(--text-muted);">Risk Factor</span>
-              <span id="score-urgency-val" style="font-weight: 800;">5%</span>
+              <span id="score-urgency-val" style="font-weight: 800;">0%</span>
             </div>
             <div class="progress-track">
-              <div id="score-urgency-bar" class="progress-fill" style="width: 5%; background: var(--emerald-safe);"></div>
+              <div id="score-urgency-bar" class="progress-fill" style="width: 0%; background: var(--emerald-safe);"></div>
             </div>
           </div>
         </div>
@@ -348,7 +394,7 @@
               <span>Sentence-Level Threat Highlighter</span>
             </h3>
             <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 2px;">
-              Click or hover any highlighted phrase to inspect the specific scam vector and mechanism.
+              Click any highlighted sentence to inspect the exact risk vector and explanation.
             </p>
           </div>
 
