@@ -1,5 +1,7 @@
 # Fake Offer Letter & Phishing Inspector
 > **Autonomous Cybersecurity Scanner & Threat Intelligence Dashboard for Prompt Wars 2026**
+>deployed website link==https://offersentry.vercel.app/
+> 
 
 [![Cybersecurity Scanner](https://img.shields.io/badge/Security-Threat%20Inspector-06B6D4?style=for-the-badge&logo=shield)](https://github.com/praj-wal45/PROMPT-WAR-)
 [![Scam Index](https://img.shields.io/badge/Scam%20Threat%20Index-0--100%25-10B981?style=for-the-badge)](https://github.com/praj-wal45/PROMPT-WAR-)
